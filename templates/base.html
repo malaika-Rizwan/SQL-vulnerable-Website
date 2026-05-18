@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}SQLi Lab{% endblock %} | CyberSec Training</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="grid-bg">
+  <div class="disclaimer-banner" role="alert">
+    EDUCATIONAL USE ONLY — localhost / supervised class VM. Do not deploy publicly. Synthetic data only.
+  </div>
+  <header class="site-header">
+    <a href="{{ url_for('main.index') }}" class="logo">SQLi<span>Lab</span></a>
+    <nav aria-label="Main">
+      {% if session.user_id %}
+      <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('learn.learn_index') }}">Learn</a>
+      <a href="{{ url_for('practice.practice_index') }}">Practice</a>
+      <a href="{{ url_for('challenges.challenges_index') }}">Challenges</a>
+      <a href="{{ url_for('leaderboard.leaderboard') }}">Leaderboard</a>
+      {% endif %}
+    </nav>
+    <div class="user-menu">
+      {% if session.user_id %}
+      <span class="user-pill">{{ session.username }}{% if user %} · {{ user.total_score }} pts{% endif %}</span>
+      <form method="post" action="{{ url_for('auth.logout') }}" class="inline-form">
+        <button type="submit" class="btn btn-ghost">Logout</button>
+      </form>
+      {% else %}
+      <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login</a>
+      {% endif %}
+    </div>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="toast-container" aria-live="polite">
+    {% for category, message in messages %}
+    <div class="toast toast-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  {% block breadcrumbs %}{% endblock %}
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>Authorized cybersecurity training — parameterized queries save lives.</p>
+  </footer>
+</body>
+</html>

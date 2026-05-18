@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Learn{% endblock %}
+{% block content %}
+<nav class="breadcrumbs"><a href="{{ url_for('main.dashboard') }}">Dashboard</a> / Learn</nav>
+<h1>Learn SQL injection</h1>
+<div class="card-grid">
+  {% for lesson in lessons %}
+  <article class="card">
+    <h2>{{ lesson.title }}</h2>
+    <p>{{ lesson.summary }}</p>
+    <a class="btn btn-primary" href="{{ url_for('learn.learn_detail', slug=lesson.slug) }}">Open lesson</a>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ lesson.title }}{% endblock %}
+{% block content %}
+<nav class="breadcrumbs"><a href="{{ url_for('learn.learn_index') }}">Learn</a> / {{ lesson.title }}</nav>
+<article class="card lesson-body">
+  <h1>{{ lesson.title }}</h1>
+  {{ lesson.body|safe }}
+</article>
+<section class="card">
+  <h2>Quiz</h2>
+  <p>{{ lesson.quiz.question }}</p>
+  <form method="post" class="stack-form">
+    {% for opt in lesson.quiz.options %}
+    <label class="radio-row"><input type="radio" name="answer" value="{{ loop.index0 }}" required /> {{ opt }}</label>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">Submit answer</button>
+  </form>
+  {% if quiz_result == 'correct' %}<p class="success">Correct!</p>{% elif quiz_result == 'incorrect' %}<p class="error">Incorrect — try again.</p>{% endif %}
+</section>
+{% endblock %}

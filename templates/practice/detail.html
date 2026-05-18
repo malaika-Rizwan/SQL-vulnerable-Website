@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ challenge.title }}{% endblock %}
+{% block content %}
+<nav class="breadcrumbs"><a href="{{ url_for('practice.practice_index') }}">Practice</a> / {{ challenge.title }}</nav>
+<article class="card">
+  <span class="tag tag-{{ challenge.difficulty }}">{{ challenge.difficulty }}</span>
+  <h1>{{ challenge.title }}</h1>
+  <p>{{ challenge.description }}</p>
+  <p class="muted">Type: {{ challenge.sqli_type }} · {{ challenge.points }} points</p>
+  <details><summary>Hints</summary><pre>{{ challenge.hints }}</pre></details>
+</article>
+
+<section class="card lab-panel">
+  <h2>Vulnerable lab endpoint</h2>
+  <p class="warn">// VULNERABLE ON PURPOSE — EDUCATIONAL LAB ONLY</p>
+  <form method="post" class="stack-form">
+    <input type="hidden" name="action" value="lab" />
+    {% if challenge.slug == 'auth-bypass-intro' %}
+    <label>Username<input name="username" /></label>
+    <label>Password<input name="password" type="password" /></label>
+    {% elif challenge.slug == 'second-order-intro' %}
+    <label>Step<select name="step"><option value="store">Store comment</option><option value="render">Render comments</option></select></label>
+    <label>Username<input name="username" /></label>
+    <label>Body<textarea name="body"></textarea></label>
+    {% else %}
+    <label>Input<textarea name="{% if challenge.slug == 'union-intro' %}keyword{% elif challenge.slug == 'boolean-intro' or challenge.slug == 'time-based-intro' %}username{% else %}secret_id{% endif %}" rows="3"></textarea></label>
+    {% endif %}
+    <button class="btn btn-primary" type="submit">Run vulnerable query</button>
+  </form>
+  {% if lab_result %}
+  <pre class="code result-box">{{ lab_result|tojson(indent=2) }}</pre>
+  {% endif %}
+</section>
+
+<section class="card">
+  <h2>Submit flag</h2>
+  <form method="post" class="stack-form">
+    <input type="hidden" name="action" value="flag" />
+    <label>FLAG<input name="flag" placeholder="FLAG{...}" required /></label>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</section>
+{% endblock %}

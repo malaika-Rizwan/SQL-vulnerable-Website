@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ challenge.title }}{% endblock %}
+{% block content %}
+<nav class="breadcrumbs"><a href="{{ url_for('challenges.challenges_index') }}">Challenges</a> / {{ challenge.title }}</nav>
+<article class="card">
+  <h1>{{ challenge.title }}</h1>
+  <p>{{ challenge.description }}</p>
+  <p class="muted">{{ challenge.sqli_type }} · {{ challenge.points }} pts · {{ challenge.difficulty }}</p>
+  {% if completed %}<p class="success">You completed this challenge.</p>{% endif %}
+</article>
+
+{% if challenge.sqli_type == 'out-of-band' %}
+<section class="card"><p>Concept-only challenge. Read the lesson, then submit the flag from the challenge description.</p></section>
+{% elif challenge.sqli_type != 'out-of-band' %}
+<section class="card lab-panel">
+  <h2>Isolated vulnerable endpoint</h2>
+  <p class="warn">// VULNERABLE ON PURPOSE — EDUCATIONAL LAB ONLY</p>
+  <form method="post" class="stack-form">
+    <input type="hidden" name="action" value="lab" />
+    {% if challenge.sqli_type == 'auth-bypass' %}
+    <label>Username<input name="username" /></label>
+    <label>Password<input name="password" /></label>
+    {% elif challenge.sqli_type == 'second-order' %}
+    <label>Step<select name="step"><option value="store">Store</option><option value="render">Render</option></select></label>
+    <label>Username<input name="username" /></label>
+    <label>Body<textarea name="body"></textarea></label>
+    {% else %}
+    <label>Payload<textarea name="input" rows="3"></textarea></label>
+    {% endif %}
+    <button class="btn btn-primary" type="submit">Probe</button>
+  </form>
+  {% if lab_result %}<pre class="code result-box">{{ lab_result|tojson(indent=2) }}</pre>{% endif %}
+</section>
+{% endif %}
+
+{% if challenge.sqli_type == 'stacked-queries' %}
+<section class="card">
+  <h3>Advanced mode</h3>
+  <form method="post"><input type="hidden" name="action" value="advanced" />
+    <label><input type="checkbox" name="enable" value="1" {% if advanced %}checked{% endif %} /> Enable stacked-query demos</label>
+    <button class="btn btn-ghost" type="submit">Save</button>
+  </form>
+</section>
+{% endif %}
+
+<section class="card">
+  <h2>Submit flag (unlimited attempts)</h2>
+  <form method="post" class="stack-form">
+    <input type="hidden" name="action" value="flag" />
+    <label>FLAG<input name="flag" required /></label>
+    <button class="btn btn-primary" type="submit">Submit flag</button>
+  </form>
+</section>
+{% endblock %}

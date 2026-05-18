@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<nav class="breadcrumbs"><a href="/">Home</a> / Dashboard</nav>
+<section class="page-header">
+  <h1>Welcome, {{ user.username }}</h1>
+  <p>Progress: {{ completed }} / {{ total }} challenges · Score: <strong>{{ user.total_score }}</strong> · Streak: {{ user.streak }}</p>
+</section>
+<section class="card-grid three dashboard-cards">
+  <a class="card card-link" href="{{ url_for('learn.learn_index') }}">
+    <h2>1 · Learn SQL injections</h2>
+    <p>Structured lessons, defender tips, and MCQ quizzes.</p>
+    <span class="card-cta">Start learning →</span>
+  </a>
+  <a class="card card-link" href="{{ url_for('practice.practice_index') }}">
+    <h2>2 · Practice SQL injections</h2>
+    <p>Guided labs with hints, difficulty tags, and flags.</p>
+    <span class="card-cta">Open sandbox →</span>
+  </a>
+  <a class="card card-link" href="{{ url_for('challenges.challenges_index') }}">
+    <h2>3 · Solve one-by-one</h2>
+    <p>Full catalog of SQLi types — extract secrets and submit flags.</p>
+    <span class="card-cta">View challenges →</span>
+  </a>
+</section>
+<a class="btn btn-ghost" href="{{ url_for('leaderboard.leaderboard') }}">View leaderboard</a>
+{% endblock %}

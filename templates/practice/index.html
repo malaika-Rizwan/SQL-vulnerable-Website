@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Practice{% endblock %}
+{% block content %}
+<nav class="breadcrumbs"><a href="{{ url_for('main.dashboard') }}">Dashboard</a> / Practice</nav>
+<h1>Practice SQL injection</h1>
+<div class="card-grid">
+  {% for ch in challenges %}
+  <article class="card">
+    <span class="tag tag-{{ ch.difficulty }}">{{ ch.difficulty }}</span>
+    <h2>{{ ch.title }}</h2>
+    <p>{{ ch.description[:120] }}...</p>
+    <a class="btn btn-primary" href="{{ url_for('practice.practice_detail', slug=ch.slug) }}">Open lab</a>
+  </article>
+  {% else %}
+  <p class="muted">No practice labs seeded. Run <code>python scripts/seed.py</code>.</p>
+  {% endfor %}
+{% endblock %}

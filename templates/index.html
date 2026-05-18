@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Authorized local training lab</p>
+  <h1>Learn SQL injection <span class="accent">safely</span></h1>
+  <p class="lead">Structured lessons, guided practice, and one-by-one challenges with scoring — for supervised cybersecurity education only.</p>
+  <div class="hero-actions">
+    {% if user %}
+    <a class="btn btn-primary" href="{{ url_for('main.dashboard') }}">Go to Dashboard</a>
+    {% else %}
+    <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Login</a>
+    <a class="btn btn-ghost" href="{{ url_for('auth.register') }}">Register</a>
+    {% endif %}
+  </div>
+</section>
+<section class="card-grid three">
+  <article class="card">
+    <h2>Learn</h2>
+    <p>9 modules covering SQLi types and mitigations with quizzes.</p>
+  </article>
+  <article class="card">
+    <h2>Practice</h2>
+    <p>Guided sandboxes with hints and vulnerable endpoints.</p>
+  </article>
+  <article class="card">
+    <h2>Challenges</h2>
+    <p>Solve flags one-by-one and climb the leaderboard.</p>
+  </article>
+</section>
+{% endblock %}

@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SQLi Lab — Python + HTML + CSS
 
-## Getting Started
+Educational SQL injection training lab. **Python (Flask)** backend, **HTML (Jinja2)** templates, **CSS** styling. No React, no Next.js, no Node frontend.
 
-First, run the development server:
+> **EDUCATIONAL USE ONLY** — Run on localhost or a supervised class VM. Do not deploy publicly.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Project structure
+
+```
+sqli.task/
+├── run.py              # Start the server
+├── start.bat           # Windows one-click start
+├── requirements.txt    # Python dependencies
+├── sqli_lab/           # Flask app (routes, models, vuln labs)
+├── templates/          # HTML pages
+├── static/css/         # Stylesheets
+├── scripts/seed.py     # Database seed
+└── tests/              # pytest
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Quick start (Windows)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Install [Python 3.11+](https://www.python.org/downloads/) and enable **Add to PATH**.
+2. Double-click **`start.bat`** or run:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cd d:\sqli.task
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python scripts\seed.py
+python run.py
+```
 
-## Learn More
+3. Open **http://localhost:5000** (not port 3000).
 
-To learn more about Next.js, take a look at the following resources:
+**Demo account:** `demo` / `demo123`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| URL | Page |
+|-----|------|
+| `/` | Home + disclaimer |
+| `/login`, `/register` | Authentication |
+| `/dashboard` | Learn · Practice · Challenges |
+| `/learn` | SQLi lessons + quizzes |
+| `/practice` | Guided vulnerable labs |
+| `/challenges` | Solve challenges one-by-one |
+| `/leaderboard` | Scoring board |
 
-## Deploy on Vercel
+## Docker
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+docker compose up --build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+→ http://localhost:5000
+
+## Tests
+
+```bash
+pytest
+```
+
+## Reset data
+
+```bash
+del data\sqli_lab.db
+python scripts\seed.py
+```
+
+## Tech stack
+
+- **Flask** — web server and routing
+- **Jinja2** — HTML templates
+- **CSS** — `static/css/style.css`
+- **SQLite** — app data + intentionally vulnerable lab tables
+- **bcrypt** — password hashing
+
+Vulnerable SQL lives only in `sqli_lab/vuln/queries.py` (labeled *EDUCATIONAL LAB ONLY*).

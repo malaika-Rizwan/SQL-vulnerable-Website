@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block content %}
+<nav class="breadcrumbs"><a href="{{ url_for('main.dashboard') }}">Dashboard</a> / Leaderboard</nav>
+<h1>Scoring board</h1>
+<section class="card scoring-rules">
+  <h2>Transparent scoring</h2>
+  <ul>
+    <li>{{ scoring_rules.base }}</li>
+    <li>{{ scoring_rules.streak }}</li>
+    <li>{{ scoring_rules.retry }}</li>
+  </ul>
+</section>
+<div class="table-wrap card">
+  <table>
+    <thead><tr><th>#</th><th>User</th><th>Score</th><th>Streak</th><th>Badges</th><th>Last activity</th></tr></thead>
+    <tbody>
+      {% for row in rows %}
+      <tr class="{% if row.is_you %}highlight{% endif %}">
+        <td>{{ loop.index }}</td>
+        <td>{{ row.username }}{% if row.is_you %} (you){% endif %}</td>
+        <td>{{ row.total_score }}</td>
+        <td>{{ row.streak }}</td>
+        <td>{% for b in row.badges %}<span class="tag">{{ b }}</span>{% else %}—{% endfor %}</td>
+        <td>{{ row.last_activity.strftime('%Y-%m-%d %H:%M') }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">No scores yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
