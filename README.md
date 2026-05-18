@@ -48,6 +48,18 @@ python run.py
 | `/challenges` | Solve challenges one-by-one |
 | `/leaderboard` | Scoring board |
 
+## Deploy on Vercel
+
+1. Import repo [SQL-vulnerable-Website](https://github.com/malaika-Rizwan/SQL-vulnerable-Website) on Vercel.
+2. Framework preset: **Other** (Python is auto-detected via `app.py`).
+3. Add environment variable:
+   - `FLASK_SECRET_KEY` = long random string (required)
+4. Deploy.
+
+Entrypoint: `app.py` exports `app` (Flask WSGI). See `pyproject.toml` and [Vercel Python docs](https://vercel.com/docs/functions/runtimes/python).
+
+> **Note:** Vercel uses ephemeral `/tmp` storage — progress resets on cold starts. This lab is intended for **local/class use**; Vercel is optional for demos only.
+
 ## Docker
 
 ```bash
