@@ -54,9 +54,10 @@ python run.py
 2. Framework preset: **Other** (Python is auto-detected via `app.py`).
 3. Add environment variable:
    - `FLASK_SECRET_KEY` = long random string (required)
-4. Deploy.
+4. Add **`FLASK_SECRET_KEY`** (required) in Project → Settings → Environment Variables.
+5. Deploy (do **not** add a custom `vercel.json` — Vercel auto-detects Flask via `app.py`).
 
-Entrypoint: `app.py` exports `app` (Flask WSGI). See `pyproject.toml` and [Vercel Python docs](https://vercel.com/docs/functions/runtimes/python).
+Entrypoint: `app.py` exports `app`. Static CSS is served from `public/css/`.
 
 > **Note:** Vercel uses ephemeral `/tmp` storage — progress resets on cold starts. This lab is intended for **local/class use**; Vercel is optional for demos only.
 
