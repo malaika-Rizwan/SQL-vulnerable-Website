@@ -36,7 +36,13 @@ def _second_order(db_path, req):
 @login_required
 def challenges_index():
     user = current_user()
-    all_ch = Challenge.query.filter_by(practice=False).order_by(Challenge.order_index).all()
+    from sqli_lab.track import get_track_slugs
+
+    all_ch = (
+        Challenge.query.filter(Challenge.slug.in_(get_track_slugs()))
+        .order_by(Challenge.order_index)
+        .all()
+    )
     done_ids = {
         p.challenge_id
         for p in Progress.query.filter_by(user_id=user.id).all()

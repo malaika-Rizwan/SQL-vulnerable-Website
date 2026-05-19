@@ -1,18 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Challenges{% endblock %}
+{% block title %}SQL Labs{% endblock %}
+{% block body_class %}cursor-lab{% endblock %}
 {% block content %}
-<nav class="breadcrumbs"><a href="{{ url_for('main.dashboard') }}">Dashboard</a> / Challenges</nav>
-<h1>Challenge catalog — solve one by one</h1>
+<nav class="breadcrumbs"><a href="{{ url_for('main.dashboard') }}">Dashboard</a> / Labs</nav>
+<h1>PortSwigger-style SQL track</h1>
+<p class="muted">8 vulnerable labs — complete in order from your dashboard.</p>
 <div class="card-grid">
   {% for ch in challenges %}
-  <article class="card {% if ch.id in done_ids %}done{% endif %}">
+  <article class="card glow-card {% if ch.id in done_ids %}done{% endif %}">
     <span class="tag">{{ ch.sqli_type }}</span>
-    {% if ch.id in done_ids %}<span class="badge-done">✓ Complete</span>{% endif %}
+    {% if ch.id in done_ids %}<span class="status-pill success">Solved</span>{% endif %}
     <h2>{{ ch.title }}</h2>
     <p>{{ ch.description[:100] }}...</p>
     <p class="muted">{{ ch.points }} pts · {{ ch.difficulty }}</p>
-    <a class="btn btn-primary" href="{{ url_for('challenges.challenge_detail', slug=ch.slug) }}">Start</a>
+    <a class="btn btn-primary btn-sm glow-btn" href="{{ url_for('challenges.challenge_detail', slug=ch.slug) }}">Launch</a>
   </article>
   {% endfor %}
 </div>
+<a class="btn btn-ghost" href="{{ url_for('main.dashboard') }}">← Back to track dashboard</a>
 {% endblock %}

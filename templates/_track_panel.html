@@ -1,0 +1,37 @@
+<section class="track-panel glow-surface" id="sql-track">
+  <div class="track-header">
+    <span class="track-badge">Hands-on vulnerable lab</span>
+    <h2 class="track-title">SQL Injection <span class="accent">Track</span></h2>
+    <p class="track-sub">
+      PortSwigger-style progression · 8 labs · Flask + SQLite ·
+      {% if user %}<strong>{{ track_done }}/{{ track_total }}</strong> complete{% else %}Register to unlock{% endif %}
+    </p>
+    <span class="track-stack">Python Flask · SQLite · Educational only</span>
+  </div>
+
+  <ol class="track-list">
+    {% for lab in track %}
+    <li class="track-item {% if lab.completed %}done{% endif %} {% if lab.active %}active{% endif %} {% if lab.locked %}locked{% endif %}">
+      <span class="track-num">{{ lab.number }}</span>
+      <div class="track-body">
+        <h3>{{ lab.title }}</h3>
+        <p>{{ lab.subtitle }}</p>
+        <span class="track-meta">{{ lab.portswigger_topic }} · {{ lab.points }} pts · {{ lab.difficulty }}</span>
+      </div>
+      <div class="track-action">
+        {% if lab.completed %}
+        <span class="status-pill success">Solved</span>
+        {% elif lab.locked and not user %}
+        <span class="status-pill locked">Login required</span>
+        {% elif lab.locked %}
+        <span class="status-pill locked">Locked</span>
+        {% elif lab.url %}
+        <a class="btn btn-primary btn-sm glow-btn" href="{{ lab.url }}">Launch lab</a>
+        {% else %}
+        <span class="status-pill">Soon</span>
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
