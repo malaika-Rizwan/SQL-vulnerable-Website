@@ -1,49 +1,31 @@
 {% extends "base.html" %}
-{% block title %}SQLi Hands-On Lab{% endblock %}
-{% block body_class %}cursor-lab guest-dashboard{% endblock %}
+{% block title %}Home{% endblock %}
 {% block content %}
-<section class="hero glow-hero">
-  <p class="eyebrow">Vulnerable application deployment · Educational only</p>
-  <h1>SQL Injection <span class="accent">Hands-On Lab</span></h1>
-  <p class="lead">
-    A deliberately vulnerable Flask + SQLite training environment inspired by the
-    PortSwigger Web Security Academy SQL track. Learn, exploit safely, and submit flags.
-  </p>
+<section class="hero">
+  <p class="eyebrow">Authorized local training lab</p>
+  <h1>Learn SQL injection <span class="accent">safely</span></h1>
+  <p class="lead">Structured lessons, guided practice, and one-by-one challenges with scoring — for supervised cybersecurity education only.</p>
   <div class="hero-actions">
     {% if user %}
-    <a class="btn btn-primary glow-btn" href="{{ url_for('main.dashboard') }}">Open glowing dashboard</a>
+    <a class="btn btn-primary" href="{{ url_for('main.dashboard') }}">Go to Dashboard</a>
     {% else %}
-    <a class="btn btn-primary glow-btn" href="{{ url_for('auth.login') }}">Login</a>
-    <a class="btn btn-ghost glow-btn-ghost" href="{{ url_for('auth.register') }}">Register</a>
+    <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Login</a>
+    <a class="btn btn-ghost" href="{{ url_for('auth.register') }}">Register</a>
     {% endif %}
   </div>
 </section>
-
-{% if guest_mode %}
-<section class="guest-cta glow-surface">
-  <h2>Before you enter the lab</h2>
-  <p>Create an account to unlock the 8-lab track, save progress, and appear on the leaderboard.</p>
-  <div class="hero-actions">
-    <a class="btn btn-primary glow-btn" href="{{ url_for('auth.register') }}">Register free</a>
-    <a class="btn btn-ghost" href="{{ url_for('auth.login') }}">I have an account</a>
-  </div>
-</section>
-{% endif %}
-
-{% include "_track_panel.html" %}
-
-<section class="card-grid three portal-cards">
-  <a class="card glow-card" href="{{ url_for('learn.learn_index') if user else url_for('auth.login') }}">
-    <h2>Academy lessons</h2>
-    <p>Theory, defender notes, and quizzes for each SQLi class.</p>
-  </a>
-  <a class="card glow-card" href="{{ url_for('practice.practice_index') if user else url_for('auth.login') }}">
-    <h2>Practice sandboxes</h2>
-    <p>Guided warm-ups with hints before the main track.</p>
-  </a>
-  <a class="card glow-card" href="{{ url_for('leaderboard.leaderboard') if user else url_for('auth.login') }}">
-    <h2>Leaderboard</h2>
-    <p>Transparent scoring — first flag only counts.</p>
-  </a>
+<section class="card-grid three">
+  <article class="card">
+    <h2>Learn</h2>
+    <p>9 modules covering SQLi types and mitigations with quizzes.</p>
+  </article>
+  <article class="card">
+    <h2>Practice</h2>
+    <p>Guided sandboxes with hints and vulnerable endpoints.</p>
+  </article>
+  <article class="card">
+    <h2>Challenges</h2>
+    <p>Solve flags one-by-one and climb the leaderboard.</p>
+  </article>
 </section>
 {% endblock %}

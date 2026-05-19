@@ -3,37 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}SQLi Lab{% endblock %} | Hands-On Vulnerable Lab</title>
+  <title>{% block title %}SQLi Lab{% endblock %} | CyberSec Training</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
-<body class="grid-bg {% block body_class %}{% endblock %}">
-  <div class="cursor-glow" aria-hidden="true"></div>
-  <div class="cursor-dot" aria-hidden="true"></div>
-
+<body class="grid-bg">
   <div class="disclaimer-banner" role="alert">
     EDUCATIONAL USE ONLY — localhost / supervised class VM. Do not deploy publicly. Synthetic data only.
   </div>
   <header class="site-header">
     <a href="{{ url_for('main.index') }}" class="logo">SQLi<span>Lab</span></a>
     <nav aria-label="Main">
-      <a href="{{ url_for('main.index') }}">Home</a>
       {% if session.user_id %}
       <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
       <a href="{{ url_for('learn.learn_index') }}">Learn</a>
       <a href="{{ url_for('practice.practice_index') }}">Practice</a>
-      <a href="{{ url_for('challenges.challenges_index') }}">Labs</a>
+      <a href="{{ url_for('challenges.challenges_index') }}">Challenges</a>
       <a href="{{ url_for('leaderboard.leaderboard') }}">Leaderboard</a>
       {% endif %}
     </nav>
     <div class="user-menu">
       {% if session.user_id %}
-      <span class="user-pill glow-pill">{{ session.username }}{% if user %} · {{ user.total_score }} pts{% endif %}</span>
+      <span class="user-pill">{{ session.username }}{% if user %} · {{ user.total_score }} pts{% endif %}</span>
       <form method="post" action="{{ url_for('auth.logout') }}" class="inline-form">
         <button type="submit" class="btn btn-ghost">Logout</button>
       </form>
       {% else %}
-      <a href="{{ url_for('auth.login') }}" class="btn btn-ghost">Login</a>
-      <a href="{{ url_for('auth.register') }}" class="btn btn-primary glow-btn">Register</a>
+      <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login</a>
       {% endif %}
     </div>
   </header>
@@ -55,8 +50,7 @@
   </main>
 
   <footer class="site-footer">
-    <p>Hands-on vulnerable lab · Flask + SQLite · Inspired by PortSwigger SQLi track</p>
+    <p>Authorized cybersecurity training — parameterized queries save lives.</p>
   </footer>
-  <script src="/js/cursor-glow.js" defer></script>
 </body>
 </html>

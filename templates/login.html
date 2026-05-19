@@ -1,28 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
-{% block body_class %}cursor-lab auth-page{% endblock %}
 {% block content %}
-<nav class="breadcrumbs"><a href="/">Home</a> / Login</nav>
-<section class="auth-shell">
-  <div class="auth-glow-panel glow-surface">
-    <p class="eyebrow">Before track access</p>
-    <h1>Login to the lab</h1>
-    <p class="muted">Unlock the 8-lab PortSwigger-style SQL injection track.</p>
-    <form method="post" class="stack-form">
-      <label>Username<input name="username" required autocomplete="username" /></label>
-      <label>Password<input name="password" type="password" required autocomplete="current-password" /></label>
-      <button class="btn btn-primary glow-btn full-width" type="submit">Enter lab</button>
-    </form>
-    <p class="muted">No account? <a href="{{ url_for('auth.register') }}">Register</a></p>
-    <p class="warn">Demo: <code>demo</code> / <code>demo123</code></p>
-  </div>
-  <aside class="auth-preview glow-surface">
-    <h2>After login</h2>
-    <ul class="preview-list">
-      <li>Glowing dashboard with live cursor effects</li>
-      <li>Sequential 8-lab vulnerable track</li>
-      <li>Flag submission &amp; leaderboard</li>
-    </ul>
-  </aside>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Login</nav>
+<section class="auth-card card">
+  <h1>Login</h1>
+  <form method="post" class="stack-form">
+    <label>Username<input name="username" required autocomplete="username" /></label>
+    <label>Password<input name="password" type="password" required autocomplete="current-password" /></label>
+    <button class="btn btn-primary" type="submit">Sign in</button>
+  </form>
+  <p class="muted">No account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+  <p class="warn">Default demo user after seed: <code>demo</code> / <code>demo123</code></p>
 </section>
 {% endblock %}

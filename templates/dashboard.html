@@ -1,36 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
-{% block body_class %}cursor-lab auth-dashboard{% endblock %}
 {% block content %}
 <nav class="breadcrumbs"><a href="/">Home</a> / Dashboard</nav>
-
-<section class="dash-hero glow-hero compact">
-  <p class="eyebrow">Welcome back, operator</p>
-  <h1>{{ user.username }} <span class="accent">// SQL track</span></h1>
-  <div class="stats-row">
-    <div class="stat glow-stat"><span>Track</span><strong>{{ track_done }}/{{ track_total }}</strong></div>
-    <div class="stat glow-stat"><span>Score</span><strong>{{ user.total_score }}</strong></div>
-    <div class="stat glow-stat"><span>Streak</span><strong>{{ user.streak }}</strong></div>
-  </div>
+<section class="page-header">
+  <h1>Welcome, {{ user.username }}</h1>
+  <p>Progress: {{ completed }} / {{ total }} challenges · Score: <strong>{{ user.total_score }}</strong> · Streak: {{ user.streak }}</p>
 </section>
-
-{% include "_track_panel.html" %}
-
-<section class="dash-actions card-grid three">
-  <a class="card glow-card card-link" href="{{ url_for('learn.learn_index') }}">
-    <h2>Learn</h2>
-    <p>Read modules &amp; pass quizzes</p>
-    <span class="card-cta">Open academy →</span>
+<section class="card-grid three dashboard-cards">
+  <a class="card card-link" href="{{ url_for('learn.learn_index') }}">
+    <h2>1 · Learn SQL injections</h2>
+    <p>Structured lessons, defender tips, and MCQ quizzes.</p>
+    <span class="card-cta">Start learning →</span>
   </a>
-  <a class="card glow-card card-link" href="{{ url_for('practice.practice_index') }}">
-    <h2>Practice</h2>
-    <p>Sandbox labs with hints</p>
-    <span class="card-cta">Train →</span>
+  <a class="card card-link" href="{{ url_for('practice.practice_index') }}">
+    <h2>2 · Practice SQL injections</h2>
+    <p>Guided labs with hints, difficulty tags, and flags.</p>
+    <span class="card-cta">Open sandbox →</span>
   </a>
-  <a class="card glow-card card-link" href="{{ url_for('leaderboard.leaderboard') }}">
-    <h2>Leaderboard</h2>
-    <p>Compare progress</p>
-    <span class="card-cta">Rankings →</span>
+  <a class="card card-link" href="{{ url_for('challenges.challenges_index') }}">
+    <h2>3 · Solve one-by-one</h2>
+    <p>Full catalog of SQLi types — extract secrets and submit flags.</p>
+    <span class="card-cta">View challenges →</span>
   </a>
 </section>
+<a class="btn btn-ghost" href="{{ url_for('leaderboard.leaderboard') }}">View leaderboard</a>
 {% endblock %}

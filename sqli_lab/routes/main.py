@@ -1,36 +1,25 @@
 from flask import Blueprint, render_template, session, redirect, url_for
 
 from sqli_lab.auth_utils import current_user, login_required
-from sqli_lab.track_service import build_track_view, track_progress
+from sqli_lab.models import Challenge, Progress
 
 main_bp = Blueprint("main", __name__)
 
 
 @main_bp.route("/")
 def index():
-    user = current_user()
-    track = build_track_view(user)
-    done, total = track_progress(user)
-    return render_template(
-        "index.html",
-        user=user,
-        track=track,
-        track_done=done,
-        track_total=total,
-        guest_mode=user is None,
-    )
+    return render_template("index.html", user=current_user())
 
 
 @main_bp.route("/dashboard")
 @login_required
 def dashboard():
     user = current_user()
-    track = build_track_view(user)
-    done, total = track_progress(user)
+    completed = Progress.query.filter_by(user_id=user.id).count()
+    total = Challenge.query.count()
     return render_template(
         "dashboard.html",
         user=user,
-        track=track,
-        track_done=done,
-        track_total=total,
+        completed=completed,
+        total=total,
     )
